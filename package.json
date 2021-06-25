@@ -1,0 +1,41 @@
+{
+  "name": "please",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "npx pkg --no-bytecode --public-packages \"*\" --public ."
+  },
+  "bin": {
+    "please": "index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "decompress": "^4.2.1",
+    "getos": "^3.2.1",
+    "jsdom": "^16.6.0",
+    "node-fetch": "^2.6.1",
+    "ora": "^5.4.1",
+    "yargs": "^17.0.1"
+  },
+  "devDependencies": {
+    "pkg": "^5.3.0"
+  },
+  "pkg": {
+    "targets": [
+      "latest-linux-arm64",
+      "latest-linux-x64",
+      "latest-alpine-arm64",
+      "latest-alpine-x64",
+      "latest-win-arm64",
+      "latest-win-x64",
+      "latest-macos-arm64",
+      "latest-macos-x64"
+    ],
+    "outputPath": "dist"
+  }
+}
