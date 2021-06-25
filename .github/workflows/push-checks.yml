@@ -14,7 +14,6 @@ jobs:
           node-version: 16.x
       - name: npm lint:check
         run: |
-          cd src
           npm ci
           npm run lint:check
         env:
