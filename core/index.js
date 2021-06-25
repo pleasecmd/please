@@ -7,8 +7,12 @@ const { runAsync } = require("../utils/wrap-async");
 const getos = require("getos");
 
 const getInstallCommand = (commands, { os, dist }) => {
-  if (os === "darwin") return commands["osx"] || commands["darwin"];
-  if (os === "windows") return commands["windows"] || commands["win32"];
+  if (os === "darwin") {
+    return commands["osx"] || commands["darwin"];
+  }
+  if (os === "windows") {
+    return commands["windows"] || commands["win32"];
+  }
   return commands[dist?.toLowerCase()] || commands[os];
 };
 
@@ -23,10 +27,12 @@ const installCNF = async (command) => {
 };
 
 const install = async (command) => {
-  const loaded = load(command);
+  const loaded = await load(command);
   if (loaded) {
     const progress = info(`Installing "${command}"`, true);
-    if (loaded.install) await loaded.install();
+    if (loaded.install) {
+      await loaded.install();
+    }
     progress.stop();
     return loaded.run;
   }
@@ -47,7 +53,9 @@ const entry = async (command, argv) => {
   const exists = which(command);
   if (!exists) {
     const run = await install(command);
-    if (run) return run(argv);
+    if (run) {
+      return run(argv);
+    }
   }
   return run(command, argv);
 };

@@ -3,7 +3,9 @@ const wrapAsync =
   (...args) =>
     new Promise((resolve, reject) =>
       fn.call(null, ...args, (err, os) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
         resolve(os);
       })
     );
