@@ -2,7 +2,9 @@ const { JSDOM } = require("jsdom");
 const fetch = require("node-fetch");
 
 const getOS = (el) => {
-  if (el.dataset.os) return el.dataset.os.toLowerCase().replace(/\s/g, "");
+  if (el.dataset.os) {
+    return el.dataset.os.toLowerCase().replace(/\s/g, "");
+  }
   for (const c of el.classList) {
     if (c.startsWith("install-")) {
       return c.slice(8);
