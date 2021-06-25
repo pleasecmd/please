@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "npx pkg --no-bytecode --public-packages \"*\" --public ."
+    "pack": "npx pkg --no-bytecode --public-packages \"*\" --public .",
+    "lint:check": "prettier --check . && eslint .",
+    "lint:fix": "prettier --write ."
   },
   "bin": {
     "please": "index.js"
@@ -23,7 +25,9 @@
     "yargs": "^17.0.1"
   },
   "devDependencies": {
-    "pkg": "^5.3.0"
+    "eslint": "^7.29.0",
+    "pkg": "^5.3.0",
+    "prettier": "^2.3.1"
   },
   "pkg": {
     "targets": [
