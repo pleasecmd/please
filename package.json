@@ -1,6 +1,6 @@
 {
-  "name": "please",
-  "version": "1.0.0",
+  "name": "please-cli",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
