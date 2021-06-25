@@ -27,7 +27,7 @@ const installCNF = async (command) => {
 };
 
 const install = async (command) => {
-  const loaded = load(command);
+  const loaded = await load(command);
   if (loaded) {
     const progress = info(`Installing "${command}"`, true);
     if (loaded.install) {
