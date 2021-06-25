@@ -1,5 +1,9 @@
 # Please
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/aaa7e6823a4b4103a3d45a208668c1a1)](https://www.codacy.com/gh/pleasecmd/please/dashboard?utm_source=github.com&utm_medium=referral&utm_content=pleasecmd/please&utm_campaign=Badge_Grade)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpleasecmd%2Fplease.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpleasecmd%2Fplease?ref=badge_shield)
+
 Please is an on-demand package installer. Prefix your commands with `please`
 and it will take care of installing them if they're not already installed.
 
@@ -39,3 +43,7 @@ Otherwise you can do the following in your `Dockerfile`:
 ```Dockerfile
 ADD https://github.com/pleasecmd/please/releases/${RELEASE} /usr/local/bin/please
 ```
+
+## Licence
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpleasecmd%2Fplease.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpleasecmd%2Fplease?ref=badge_large)
