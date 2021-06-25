@@ -4,12 +4,12 @@ const getos = require("getos");
 const { runAsync } = require("../utils/wrap-async");
 
 const loadPlatformSpecific = async (command) => {
-  const { os, dist } = await runAsync(getos);
-  const distPath = home("repo", "commands", `${command}.${dist}.js`);
+  const osInfo = await runAsync(getos);
+  const distPath = home("repo", "commands", `${command}.${osInfo.dist}.js`);
   if (existsSync(distPath)) {
     return require(distPath);
   }
-  const osPath = home("repo", "commands", `${command}.${os}.js`);
+  const osPath = home("repo", "commands", `${command}.${osInfo.os}.js`);
   if (existsSync(osPath)) {
     return require(osPath);
   }
