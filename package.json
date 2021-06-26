@@ -42,5 +42,13 @@
       "latest-macos-x64"
     ],
     "outputPath": "dist"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pleasecmd/please.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pleasecmd/please/issues"
+  },
+  "homepage": "https://please.dev"
 }
