@@ -2,7 +2,7 @@ const { bootstrap, load } = require("../repo");
 const { which } = require("../utils/which");
 const { spawnSync } = require("child_process");
 const { info, error } = require("../log");
-const { cnf } = require("../utils/cnf");
+const { cnf, patchInstallCommand } = require("../utils/cnf");
 const { getOSInfo } = require("../utils/os");
 const { readConfig } = require("../config");
 
@@ -18,12 +18,17 @@ const getInstallCommand = (commands, { os, variant }) => {
 
 const installCNF = async (command) => {
   const installCommands = await cnf(command);
-  const os = await getOSInfo();
-  const installCommand = getInstallCommand(installCommands, os);
+  const osInfo = await getOSInfo();
+  const installCommand = getInstallCommand(installCommands, osInfo);
   if (!installCommand) {
     throw new Error("Couldn't find command on CNF");
   }
-  spawnSync(installCommand, { stdio: "inherit", shell: true });
+  if (osInfo.os === "linux") {
+    const patchedCommand = patchInstallCommand(command);
+    spawnSync(patchedCommand, { stdio: "inherit", shell: true });
+  } else {
+    spawnSync(installCommand, { stdio: "inherit", shell: true });
+  }
 };
 
 const script = async (_, loaded) => {
