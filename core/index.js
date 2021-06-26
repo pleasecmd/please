@@ -2,33 +2,8 @@ const { bootstrap, load } = require("../repo");
 const { which } = require("../utils/which");
 const { spawnSync } = require("child_process");
 const { info, error } = require("../log");
-const { cnf, patchInstallCommand } = require("../utils/cnf");
-const { getOSInfo } = require("../utils/os");
+const { installCNF } = require("../utils/cnf");
 const { readConfig } = require("../config");
-
-const getCNFInstallCommand = (commands, { os, variant }) => {
-  if (os === "macos") {
-    return commands["osx"] || commands["darwin"];
-  }
-  if (os === "windows") {
-    return commands["windows"] || commands["win32"];
-  }
-  if (os === "linux") {
-    const installCommand = commands[variant?.toLowerCase()] || commands[os];
-    return patchInstallCommand(installCommand);
-  }
-  return commands[variant?.toLowerCase()] || commands[os];
-};
-
-const installCNF = async (command) => {
-  const installCommands = await cnf(command);
-  const osInfo = await getOSInfo();
-  const installCommand = getCNFInstallCommand(installCommands, osInfo);
-  if (!installCommand) {
-    throw new Error("Couldn't find command on CNF");
-  }
-  spawnSync(installCommand, { stdio: "inherit", shell: true });
-};
 
 const script = async (_, loaded) => {
   return loaded.run;

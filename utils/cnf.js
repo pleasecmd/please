@@ -1,3 +1,5 @@
+const { getOSInfo } = require("./os");
+const { spawnSync } = require("child_process");
 const { JSDOM } = require("jsdom");
 const fetch = require("node-fetch");
 
@@ -58,5 +60,30 @@ const patchInstallCommand = (command) => {
   return sudo(`${command}`);
 };
 
+const getCNFInstallCommand = (commands, { os, variant }) => {
+  if (os === "macos") {
+    return commands["osx"] || commands["darwin"];
+  }
+  if (os === "windows") {
+    return commands["windows"] || commands["win32"];
+  }
+  if (os === "linux") {
+    const installCommand = commands[variant?.toLowerCase()] || commands[os];
+    return patchInstallCommand(installCommand);
+  }
+  return commands[variant?.toLowerCase()] || commands[os];
+};
+
+const installCNF = async (command) => {
+  const installCommands = await cnf(command);
+  const osInfo = await getOSInfo();
+  const installCommand = getCNFInstallCommand(installCommands, osInfo);
+  if (!installCommand) {
+    throw new Error("Couldn't find command on CNF");
+  }
+  spawnSync(installCommand, { stdio: "inherit", shell: true });
+};
+
 module.exports.cnf = cnf;
 module.exports.patchInstallCommand = patchInstallCommand;
+module.exports.installCNF = installCNF;
