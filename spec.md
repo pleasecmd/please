@@ -60,3 +60,46 @@ Following operating systems should have tier 1 supports:
 ```
 please --kwarg args command --ckwargs cargs
 ```
+
+## Repo
+
+We need to store:
+
+1. Installation instructions for each OS / package manager
+2. Prebuilt fetch and decompress instructions
+3. Build instructions for each OS
+4. Scripted install or run
+
+### Repo structure
+
+Proposed repository structure:
+
+```
+repo/
+├─ ${command}/
+│  ├─ build/
+│  │  ├─ ${os}.${variant}.${release}.${arch}.js
+│  ├─ install/
+│  │  ├─ ${os}.${variant}.${release}.${arch}.js
+│  ├─ prebuilt/
+│  │  ├─ ${os}.${variant}.${release}.${arch}.js
+│  ├─ script/
+│  │  ├─ ${os}.${variant}.${release}.${arch}.js
+
+```
+
+Where:
+
+1. `os` is the OS name, type, class or family (eg. `windows`, `macos`, `bsd`, `linux` or `any`)
+2. `variant` is the distribution, variant or version (eg. `10`, `ubuntu`, `debian`, `freebsd` or `any`)
+3. `release` is the version, release or build number (eg. `21h1`, `20.04`, `10` or `any`)
+4. `arch` is the cpu architecture (eg. `arm64`, `x64`, or `any`)
+
+The program should first try the exact values for each of the parameters, then switch to `any` one parameter at a time from right to left.
+
+## Configuration
+
+Can contain:
+
+1. Preferred way of installation, in order of preference
+2. Preferred package managers, in order of preference (eg. brew, ports...)

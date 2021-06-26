@@ -44,6 +44,11 @@ Otherwise you can do the following in your `Dockerfile`:
 ADD https://github.com/pleasecmd/please/releases/${RELEASE} /usr/local/bin/please
 ```
 
+## Repository
+
+Please requires a repository to function, this repository is
+hosted on [GitHub](https://github.com/pleasecmd/repo). Check it out to learn more info.
+
 ## Licence
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpleasecmd%2Fplease.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpleasecmd%2Fplease?ref=badge_large)

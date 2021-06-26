@@ -20,6 +20,7 @@
     "decompress": "^4.2.1",
     "getos": "^3.2.1",
     "jsdom": "^16.6.0",
+    "macos-release": "^2.5.0",
     "node-fetch": "^2.6.1",
     "ora": "^5.4.1",
     "yargs": "^17.0.1"

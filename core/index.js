@@ -3,11 +3,10 @@ const { which } = require("../utils/which");
 const { spawnSync } = require("child_process");
 const { info, error } = require("../log");
 const { cnf } = require("../utils/cnf");
-const { runAsync } = require("../utils/wrap-async");
-const getos = require("getos");
+const { getOSInfo } = require("../utils/os");
 
 const getInstallCommand = (commands, { os, dist }) => {
-  if (os === "darwin") {
+  if (os === "macos") {
     return commands["osx"] || commands["darwin"];
   }
   if (os === "windows") {
@@ -18,7 +17,7 @@ const getInstallCommand = (commands, { os, dist }) => {
 
 const installCNF = async (command) => {
   const installCommands = await cnf(command);
-  const os = await runAsync(getos);
+  const os = await getOSInfo();
   const installCommand = getInstallCommand(installCommands, os);
   if (!installCommand) {
     throw new Error("Couldn't find command on CNF");

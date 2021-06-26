@@ -1,10 +1,9 @@
 const { existsSync } = require("fs");
-const { home } = require("./common");
-const getos = require("getos");
-const { runAsync } = require("../utils/wrap-async");
+const { home } = require("../utils/home");
+const { getOSInfo } = require("../utils/os");
 
 const loadPlatformSpecific = async (command) => {
-  const osInfo = await runAsync(getos);
+  const osInfo = await getOSInfo();
   const distPath = home("repo", "commands", `${command}.${osInfo.dist}.js`);
   if (existsSync(distPath)) {
     return require(distPath);

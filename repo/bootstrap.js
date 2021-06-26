@@ -2,7 +2,7 @@ const { execSync } = require("child_process");
 const { existsSync, mkdirSync, writeFileSync } = require("fs");
 const { rmSync } = require("fs");
 const { warn, info } = require("../log");
-const { home } = require("./common");
+const { home } = require("../utils/home");
 const fetch = require("node-fetch");
 const decompress = require("decompress");
 
