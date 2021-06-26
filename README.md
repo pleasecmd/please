@@ -26,10 +26,10 @@ echo "Please is amazing" | please lolcat
 In case you already have `node` installed on your OS, you can run the following command to install `please`:
 
 ```bash
-sudo npm i -g please
+sudo npm i -g @please.dev/cli
 ```
 
-Refer to ["Installing Node.js via package manager"](https://nodejs.org/en/download/package-manager/) if you don't have `node` installed.
+Refer to ["Installing Node.js via package manager"](https://nodejs.org/en/download/package-manager) if you don't have `node` installed.
 
 ### Using releases
 
