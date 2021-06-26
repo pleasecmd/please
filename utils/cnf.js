@@ -1,4 +1,5 @@
 const { getOSInfo } = require("./os");
+const { which } = require("./which");
 const { spawnSync } = require("child_process");
 const { JSDOM } = require("jsdom");
 const fetch = require("node-fetch");
@@ -33,8 +34,8 @@ const cnf = async (command) => {
 const strip = (command, toStrip) => command.slice(toStrip.length);
 
 const sudo = (command) => {
-  const needsSudo = process.getuid() !== 0;
-  if (needsSudo) {
+  const shouldSudo = process.getuid() !== 0 && which("sudo");
+  if (shouldSudo) {
     return `sudo ${command}`;
   }
   return command;
