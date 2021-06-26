@@ -13,6 +13,10 @@ const getInstallCommand = (commands, { os, variant }) => {
   if (os === "windows") {
     return commands["windows"] || commands["win32"];
   }
+  if (os === "linux") {
+    const installCommand = commands[variant?.toLowerCase()] || commands[os];
+    return patchInstallCommand(installCommand);
+  }
   return commands[variant?.toLowerCase()] || commands[os];
 };
 
@@ -23,12 +27,7 @@ const installCNF = async (command) => {
   if (!installCommand) {
     throw new Error("Couldn't find command on CNF");
   }
-  if (osInfo.os === "linux") {
-    const patchedCommand = patchInstallCommand(command);
-    spawnSync(patchedCommand, { stdio: "inherit", shell: true });
-  } else {
-    spawnSync(installCommand, { stdio: "inherit", shell: true });
-  }
+  spawnSync(installCommand, { stdio: "inherit", shell: true });
 };
 
 const script = async (_, loaded) => {
