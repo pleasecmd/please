@@ -30,22 +30,32 @@ const cnf = async (command) => {
 
 const strip = (command, toStrip) => command.slice(toStrip.length);
 
-const patchInstallCommand = (command) => {
+const sudo = (command) => {
   const needsSudo = process.getuid() !== 0;
-  const sudoPrefix = needsSudo ? `sudo ` : ``;
+  if (needsSudo) {
+    return `sudo ${command}`;
+  }
+  return command;
+};
+
+const patchInstallCommand = (command) => {
   if (command.startsWith("apt install")) {
     const stripped = strip(command, "apt install ");
-    return `${sudoPrefix}apt update && ${sudoPrefix}apt install -y ${stripped}`;
+    const update = sudo("apt update");
+    const install = sudo(`apt install -y ${stripped}`);
+    return `${update} && ${install}`;
   }
   if (command.startsWith("apt-get install")) {
     const stripped = strip(command, "apt-get install ");
-    return `${sudoPrefix}apt-get update && ${sudoPrefix}apt-get install -y ${stripped}`;
+    const update = sudo("apt-get update");
+    const install = sudo(`apt-get install -y ${stripped}`);
+    return `${update} && ${install}`;
   }
   if (command.startsWith("pacman -S")) {
     const stripped = strip(command, "pacman -S ");
-    return `${sudoPrefix}pacman --noconfirm -S ${stripped}`;
+    return sudo(`pacman --noconfirm -S ${stripped}`);
   }
-  return `${sudoPrefix}${command}`;
+  return sudo(`${command}`);
 };
 
 module.exports.cnf = cnf;
