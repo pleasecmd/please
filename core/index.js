@@ -6,7 +6,7 @@ const { cnf, patchInstallCommand } = require("../utils/cnf");
 const { getOSInfo } = require("../utils/os");
 const { readConfig } = require("../config");
 
-const getInstallCommand = (commands, { os, variant }) => {
+const getCNFInstallCommand = (commands, { os, variant }) => {
   if (os === "macos") {
     return commands["osx"] || commands["darwin"];
   }
@@ -23,7 +23,7 @@ const getInstallCommand = (commands, { os, variant }) => {
 const installCNF = async (command) => {
   const installCommands = await cnf(command);
   const osInfo = await getOSInfo();
-  const installCommand = getInstallCommand(installCommands, osInfo);
+  const installCommand = getCNFInstallCommand(installCommands, osInfo);
   if (!installCommand) {
     throw new Error("Couldn't find command on CNF");
   }
