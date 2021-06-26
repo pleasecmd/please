@@ -35,11 +35,11 @@ const patchInstallCommand = (command) => {
   const sudoPrefix = needsSudo ? `sudo ` : ``;
   if (command.startsWith("apt install")) {
     const stripped = strip(command, "apt install ");
-    return `${sudoPrefix}apt install -y ${stripped}`;
+    return `${sudoPrefix}apt update && ${sudoPrefix}apt install -y ${stripped}`;
   }
   if (command.startsWith("apt-get install")) {
     const stripped = strip(command, "apt-get install ");
-    return `${sudoPrefix}apt-get install -y ${stripped}`;
+    return `${sudoPrefix}apt-get update && ${sudoPrefix}apt-get install -y ${stripped}`;
   }
   if (command.startsWith("pacman -S")) {
     const stripped = strip(command, "pacman -S ");
