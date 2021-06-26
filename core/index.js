@@ -6,14 +6,14 @@ const { cnf } = require("../utils/cnf");
 const { getOSInfo } = require("../utils/os");
 const { readConfig } = require("../config");
 
-const getInstallCommand = (commands, { os, dist }) => {
+const getInstallCommand = (commands, { os, variant }) => {
   if (os === "macos") {
     return commands["osx"] || commands["darwin"];
   }
   if (os === "windows") {
     return commands["windows"] || commands["win32"];
   }
-  return commands[dist?.toLowerCase()] || commands[os];
+  return commands[variant?.toLowerCase()] || commands[os];
 };
 
 const installCNF = async (command) => {
