@@ -21,8 +21,9 @@ const readDefaultConfig = async () => {
     if (existsSync(configPath)) return require(configPath);
   }
   return {
-    preferred: ["install", "prebuilt", "script", "build", "cnf"],
+    preferred: ["install", "prebuilt", "script", "build"],
     installWith: ["default"],
+    useCNF: true,
   };
 };
 

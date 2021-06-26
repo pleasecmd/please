@@ -5,8 +5,10 @@ const getFileNamesForOS = (osInfo, ext = "js") => {
   return [
     getName(os, variant, release, arch, ext),
     getName(os, variant, release, "any", ext),
+    getName(os, variant, "any", arch, ext),
     getName(os, variant, "any", "any", ext),
     getName(os, "any", "any", "any", ext),
+    getName("any", "any", "any", "any", ext),
   ];
 };
 

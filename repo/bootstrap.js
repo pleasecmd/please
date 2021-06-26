@@ -72,7 +72,11 @@ const checkRepo = async ({ update } = {}) => {
   }
 };
 
-const bootstrap = async ({ update } = {}) => {
+const defaultBootstrapOpts = {
+  update: true,
+};
+
+const bootstrap = async ({ update } = defaultBootstrapOpts) => {
   await checkRepo({ update });
 };
 

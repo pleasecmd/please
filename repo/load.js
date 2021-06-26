@@ -1,27 +1,21 @@
 const { existsSync } = require("fs");
 const { home } = require("../utils/home");
 const { getOSInfo } = require("../utils/os");
+const { getFileNamesForOS } = require("./meta");
 
-const loadPlatformSpecific = async (command) => {
+const loadPlatformSpecific = async (command, type) => {
   const osInfo = await getOSInfo();
-  const distPath = home("repo", "commands", `${command}.${osInfo.dist}.js`);
-  if (existsSync(distPath)) {
-    return require(distPath);
-  }
-  const osPath = home("repo", "commands", `${command}.${osInfo.os}.js`);
-  if (existsSync(osPath)) {
-    return require(osPath);
+  const names = getFileNamesForOS(osInfo);
+  for (const name of names) {
+    const filePath = home(".please", "repo", "commands", command, type, name);
+    if (existsSync(filePath)) {
+      return require(filePath);
+    }
   }
 };
 
-const loadGeneric = (command) => {
-  const path = home("repo", "commands", `${command}.js`);
-  return existsSync(path) ? require("path") : null;
-};
-
-const load = async (command) => {
-  const platformSpecific = await loadPlatformSpecific(command);
-  return platformSpecific || loadGeneric(command);
+const load = async (command, type) => {
+  return await loadPlatformSpecific(command, type);
 };
 
 module.exports.load = load;

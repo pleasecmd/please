@@ -76,16 +76,18 @@ Proposed repository structure:
 
 ```
 repo/
-├─ ${command}/
-│  ├─ build/
-│  │  ├─ ${os}.${variant}.${release}.${arch}.js
-│  ├─ install/
-│  │  ├─ ${os}.${variant}.${release}.${arch}.js
-│  ├─ prebuilt/
-│  │  ├─ ${os}.${variant}.${release}.${arch}.js
-│  ├─ script/
-│  │  ├─ ${os}.${variant}.${release}.${arch}.js
-
+├─ commands/
+│  ├─ ${command}/
+│  │  ├─ build/
+│  │  │  ├─ ${os}.${variant}.${release}.${arch}.js
+│  │  ├─ install/
+│  │  │  ├─ ${os}.${variant}.${release}.${arch}.js
+│  │  ├─ prebuilt/
+│  │  │  ├─ ${os}.${variant}.${release}.${arch}.js
+│  │  ├─ script/
+│  │  │  ├─ ${os}.${variant}.${release}.${arch}.js
+├─ configs/
+│  ├─ ${os}.${variant}.${release}.${arch}.js
 ```
 
 Where:
