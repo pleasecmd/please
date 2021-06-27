@@ -10,7 +10,7 @@ const checkGit = (config) => {
   try {
     return execSync("git --version").toString();
   } catch (err) {
-    warn("Git not found, install git to speed things up.", config);
+    warn({ text: "Git not found, install git to speed things up.", config });
   }
 };
 
