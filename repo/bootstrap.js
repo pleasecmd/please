@@ -5,12 +5,15 @@ const { warn, progress } = require("../log");
 const { home } = require("../utils/home");
 const fetch = require("node-fetch");
 const decompress = require("decompress");
+const { which } = require("../utils/which");
 
 const checkGit = (config) => {
-  try {
-    return execSync("git --version").toString();
-  } catch (err) {
+  const hasGit = which("git");
+  if (!hasGit) {
     warn({ text: "Git not found, install git to speed things up.", config });
+    return false;
+  } else {
+    return true;
   }
 };
 
