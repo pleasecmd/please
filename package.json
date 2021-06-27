@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prepack": "node ./scripts/prepack.js",
     "pack": "npx pkg --no-bytecode --public-packages \"*\" --public .",
+    "postpack": "node ./scripts/postpack.js",
     "lint:check": "prettier --check . && eslint .",
     "lint:fix": "prettier --write ."
   },
