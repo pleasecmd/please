@@ -60,6 +60,7 @@ const getCNFDistroName = (variant) => {
   if (variant === "archlinux") {
     return "arch";
   }
+  return variant;
 };
 
 const getCNFInstallCommand = (commands, { os, variant }) => {
