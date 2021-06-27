@@ -53,6 +53,15 @@ const patchInstallCommand = (command) => {
   return sudo(`${command}`);
 };
 
+const getCNFDistroName = (variant) => {
+  if (variant === "alpinelinux") {
+    return "alpine";
+  }
+  if (variant === "archlinux") {
+    return "arch";
+  }
+};
+
 const getCNFInstallCommand = (commands, { os, variant }) => {
   if (os === "macos") {
     return commands["osx"] || commands["darwin"];
@@ -61,7 +70,8 @@ const getCNFInstallCommand = (commands, { os, variant }) => {
     return commands["windows"] || commands["win32"];
   }
   if (os === "linux") {
-    const installCommand = commands[variant?.toLowerCase()] || commands[os];
+    const distro = getCNFDistroName(variant?.toLowerCase());
+    const installCommand = commands[distro] || commands[os];
     return patchInstallCommand(installCommand);
   }
   return commands[variant?.toLowerCase()] || commands[os];
