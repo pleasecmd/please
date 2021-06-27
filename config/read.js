@@ -24,7 +24,7 @@ const readDefaultConfig = async () => {
     preferred: ["install", "prebuilt", "script", "build"],
     installWith: ["default"],
     useCNF: true,
-    log: 0,
+    log: 1,
     silentInstall: true,
   };
 };

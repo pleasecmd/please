@@ -18,7 +18,7 @@ const repoAddr = "https://github.com/pleasecmd/repo";
 
 const createRepoGit = (config) => {
   const spin = progress({ text: "Cloning please repository", config });
-  const stdio = config.silent || config.log === 0 ? "ignore" : "inherit";
+  const stdio = config.silent || config.log < 2 ? "ignore" : "inherit";
   execSync(`git clone ${repoAddr}`, {
     cwd: home(".please"),
     stdio,
@@ -50,7 +50,7 @@ const updateRepo = async (config) => {
   const git = existsSync(home(".please", "repo", ".git"));
   const spin = progress({ text: "Updating the please repository", config });
   if (git) {
-    const stdio = config.silent || config.log === 0 ? "ignore" : "inherit";
+    const stdio = config.silent || config.log < 2 ? "ignore" : "inherit";
     execSync(`git pull`, { cwd: home(".please", "repo"), stdio });
   } else {
     const hasGit = checkGit(config);
