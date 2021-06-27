@@ -1,6 +1,6 @@
 FROM alpine
 
-ARG VERSION=0.2.6
+ARG VERSION=0.2.7
 
 ADD https://github.com/pleasecmd/please/releases/download/v${VERSION}/please-${VERSION}-alpine-x64 /usr/local/bin/please
 RUN chmod +x /usr/local/bin/please
