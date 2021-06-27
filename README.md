@@ -57,7 +57,7 @@ If you already have `node` available on your docker image it's recommended to in
 Otherwise you can do the following in your `Dockerfile`:
 
 ```Dockerfile
-ADD https://github.com/pleasecmd/please/releases/${RELEASE} /usr/local/bin/please
+ADD https://get.please.dev/${VERSION}/${OS}/${ARCH} /usr/local/bin/please
 RUN chmod +x /usr/local/bin/please
 ```
 

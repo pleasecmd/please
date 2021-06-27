@@ -2,7 +2,7 @@ FROM alpine
 
 ARG VERSION=0.2.8
 
-ADD https://github.com/pleasecmd/please/releases/download/v${VERSION}/please-${VERSION}-alpine-x64 /usr/local/bin/please
+ADD https://get.please.dev/${VERSION}/alpine/x64 /usr/local/bin/please
 RUN chmod +x /usr/local/bin/please
 
 WORKDIR /app
