@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:latest
 
 ARG VERSION=0.2.8
 
