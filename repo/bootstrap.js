@@ -1,83 +1,81 @@
 const { execSync } = require("child_process");
 const { existsSync, mkdirSync, writeFileSync } = require("fs");
 const { rmSync } = require("fs");
-const { warn, info } = require("../log");
+const { warn, progress } = require("../log");
 const { home } = require("../utils/home");
 const fetch = require("node-fetch");
 const decompress = require("decompress");
 
-const checkGit = () => {
+const checkGit = (config) => {
   try {
     return execSync("git --version").toString();
   } catch (err) {
-    warn("Git not found, install git to speed things up.");
+    warn("Git not found, install git to speed things up.", config);
   }
 };
 
 const repoAddr = "https://github.com/pleasecmd/repo";
 
-const createRepoGit = () => {
-  const progress = info("Cloning please repository", true);
+const createRepoGit = (config) => {
+  const spin = progress({ text: "Cloning please repository", config });
+  const stdio = config.silent || config.log === 0 ? "ignore" : "inherit";
   execSync(`git clone ${repoAddr}`, {
     cwd: home(".please"),
-    stdio: "pipe",
+    stdio,
   });
-  progress.stop();
+  spin?.stop();
 };
 
-const createRepoZip = async () => {
-  const progress = info("Downloading the please repository", true);
+const createRepoZip = async (config) => {
+  const spin = progress({ text: "Downloading the please repository", config });
   const zipAddr = `${repoAddr}/archive/refs/heads/master.zip`;
   const resp = await fetch(zipAddr);
   const buffer = await resp.buffer();
   writeFileSync(home(".please", "repo.zip"), buffer);
   decompress(home(".please", "repo.zip"), home(".please"));
-  progress.stop();
+  spin?.stop();
 };
 
-const createRepo = async () => {
+const createRepo = async (config) => {
   mkdirSync(home(".please"), { recursive: true });
-  const hasGit = checkGit();
+  const hasGit = checkGit(config);
   if (hasGit) {
-    return createRepoGit();
+    return createRepoGit(config);
   } else {
-    return createRepoZip();
+    return createRepoZip(config);
   }
 };
 
-const updateRepo = async () => {
+const updateRepo = async (config) => {
   const git = existsSync(home(".please", "repo", ".git"));
-  const progress = info("Updating the please repository", true);
+  const spin = progress({ text: "Updating the please repository", config });
   if (git) {
-    execSync(`git pull`, { cwd: home(".please", "repo"), stdio: "pipe" });
+    const stdio = config.silent || config.log === 0 ? "ignore" : "inherit";
+    execSync(`git pull`, { cwd: home(".please", "repo"), stdio });
   } else {
-    const hasGit = checkGit();
+    const hasGit = checkGit(config);
     rmSync(home(".please", "repo"), { recursive: true });
     if (hasGit) {
-      createRepoGit();
+      createRepoGit(config);
     } else {
-      createRepoZip();
+      createRepoZip(config);
     }
   }
-  progress.stop();
+  spin?.stop();
 };
 
-const checkRepo = async ({ update } = {}) => {
+const checkRepo = async (config) => {
   const exists = existsSync(home(".please", "repo"));
   if (!exists) {
-    return await createRepo();
+    return await createRepo(config);
   }
-  if (update) {
-    return await updateRepo();
+  if (config.update) {
+    return await updateRepo(config);
   }
 };
 
-const defaultBootstrapOpts = {
-  update: true,
-};
-
-const bootstrap = async ({ update } = defaultBootstrapOpts) => {
-  await checkRepo({ update });
+const bootstrap = async (config) => {
+  await checkRepo(config);
 };
 
 module.exports.bootstrap = bootstrap;

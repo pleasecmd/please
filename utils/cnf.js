@@ -1,5 +1,5 @@
 const { getOSInfo } = require("./os");
-const { which } = require("./which");
+const { sudo } = require("./sudo");
 const { spawnSync } = require("child_process");
 const { JSDOM } = require("jsdom");
 const fetch = require("node-fetch");
@@ -32,14 +32,6 @@ const cnf = async (command) => {
 };
 
 const strip = (command, toStrip) => command.slice(toStrip.length);
-
-const sudo = (command) => {
-  const shouldSudo = process.getuid() !== 0 && which("sudo");
-  if (shouldSudo) {
-    return `sudo ${command}`;
-  }
-  return command;
-};
 
 const patchInstallCommand = (command) => {
   if (command.startsWith("apt install")) {
@@ -75,14 +67,15 @@ const getCNFInstallCommand = (commands, { os, variant }) => {
   return commands[variant?.toLowerCase()] || commands[os];
 };
 
-const installCNF = async (command) => {
+const installCNF = async (command, config) => {
   const installCommands = await cnf(command);
   const osInfo = await getOSInfo();
   const installCommand = getCNFInstallCommand(installCommands, osInfo);
   if (!installCommand) {
     throw new Error("Couldn't find command on CNF");
   }
-  spawnSync(installCommand, { stdio: "inherit", shell: true });
+  const stdio = config.silentInstall ? "ignore" : "inherit";
+  spawnSync(installCommand, { stdio, shell: true });
 };
 
 module.exports.cnf = cnf;
