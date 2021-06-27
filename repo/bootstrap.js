@@ -1,5 +1,6 @@
 const { execSync } = require("child_process");
 const { existsSync, mkdirSync, writeFileSync } = require("fs");
+const { renameSync } = require("fs");
 const { rmSync } = require("fs");
 const { warn, progress } = require("../log");
 const { home } = require("../utils/home");
@@ -36,6 +37,7 @@ const createRepoZip = async (config) => {
   const buffer = await resp.buffer();
   writeFileSync(home(".please", "repo.zip"), buffer);
   decompress(home(".please", "repo.zip"), home(".please"));
+  renameSync(home(".please", "repo-master"), home(".please", "repo"));
   spin?.stop();
 };
 
@@ -45,7 +47,7 @@ const createRepo = async (config) => {
   if (hasGit) {
     return createRepoGit(config);
   } else {
-    return createRepoZip(config);
+    return await createRepoZip(config);
   }
 };
 
@@ -61,7 +63,7 @@ const updateRepo = async (config) => {
     if (hasGit) {
       createRepoGit(config);
     } else {
-      createRepoZip(config);
+      await createRepoZip(config);
     }
   }
   spin?.stop();
