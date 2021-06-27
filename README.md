@@ -19,6 +19,21 @@ please [please-args] <command> [command-args]
 echo "Please is amazing" | please lolcat
 ```
 
+## Notes
+
+Please is a highly experimental tool. It is in alpha stages.
+There aren't many packages available on the please repository.
+Although we have a temporary fallback method to fetch install instructions from
+[CNF](https://command-not-found.com/),
+chances are high that you won't find the packages or commands you are looking for.
+
+Please is a community driven package manager, adding commands to the
+[please repository](https://github.com/pleasecmd/repo) is easy and could be helpful
+to a lot of people with the same requirements as you.
+If you cannot find a command, or something is broken, feel free to make a PR for it.
+You can add install or build instructins for your own OS, or all operating systems,
+or you can implement a command in pure JavaScript.
+
 ## Installation
 
 ### Via npm
