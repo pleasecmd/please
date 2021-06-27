@@ -1,8 +1,8 @@
 FROM alpine
 
-ARG VERSION=0.2.5
+ARG VERSION=0.2.6
 
-COPY please-${VERSION}-alpine-x64 /usr/local/bin/please
+ADD https://github.com/pleasecmd/please/releases/download/v${VERSION}/please-${VERSION}-alpine-x64 /usr/local/bin/please
 RUN chmod +x /usr/local/bin/please
 
 WORKDIR /app

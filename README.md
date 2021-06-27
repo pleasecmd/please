@@ -57,7 +57,10 @@ Otherwise you can do the following in your `Dockerfile`:
 
 ```Dockerfile
 ADD https://github.com/pleasecmd/please/releases/${RELEASE} /usr/local/bin/please
+RUN chmod +x /usr/local/bin/please
 ```
+
+Check [examples/docker](./examples/docker) for a working example.
 
 ## Repository
 

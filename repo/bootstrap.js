@@ -36,7 +36,7 @@ const createRepoZip = async (config) => {
   const resp = await fetch(zipAddr);
   const buffer = await resp.buffer();
   writeFileSync(home(".please", "repo.zip"), buffer);
-  decompress(home(".please", "repo.zip"), home(".please"));
+  await decompress(home(".please", "repo.zip"), home(".please"));
   renameSync(home(".please", "repo-master"), home(".please", "repo"));
   spin?.stop();
 };
