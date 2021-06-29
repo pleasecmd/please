@@ -3,4 +3,3 @@ coverage
 dist
 .DS_Store
 .github
-utils/npm.js
