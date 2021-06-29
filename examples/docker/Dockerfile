@@ -1,6 +1,6 @@
 FROM alpine:3
 
-ARG VERSION=0.2.8
+ARG VERSION=0.3.0
 
 ADD https://get.please.dev/${VERSION}/alpine/x64 /usr/local/bin/please
 RUN chmod +x /usr/local/bin/please
