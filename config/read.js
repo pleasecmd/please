@@ -1,6 +1,6 @@
 const { home } = require("../utils/home");
 const { existsSync } = require("fs");
-const { getOSInfo } = require("../utils/os");
+const { getOSInfo } = require("../os");
 const { getFileNamesForOS } = require("../repo/meta");
 
 const readPleaseConfig = () => {
@@ -26,6 +26,7 @@ const readDefaultConfig = async () => {
     useCNF: true,
     log: 1,
     silentInstall: true,
+    update: true,
   };
 };
 
