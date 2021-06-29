@@ -8,9 +8,6 @@
     "lint:check": "prettier --check . && eslint .",
     "lint:fix": "prettier --write ."
   },
-  "bin": {
-    "please": "index.js"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
