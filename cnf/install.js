@@ -13,7 +13,7 @@ const installCommand = (commands, { os, variant }, config) => {
     return installCommandWindows(commands, config);
   }
   if (os === "linux") {
-    installCommandLinux(commands, variant, config);
+    return installCommandLinux(commands, variant, config);
   }
   return installCommandGeneric(commands, os, variant, config);
 };

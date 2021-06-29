@@ -3,13 +3,15 @@ const { managers } = require("../os");
 const installCommandMacOS = (commands, config) => {
   const command = commands["osx"] || commands["darwin"];
   if (!command) {
-    return null;
+    return false;
   }
   const name = command.match(/brew install (.*)/)?.[1];
   if (!name) {
-    return null;
+    console.log({ name });
+    return false;
   }
-  return managers.macos.install([name], [], config);
+  managers.macos.install([name], [], config);
+  return true;
 };
 
 module.exports.installCommandMacOS = installCommandMacOS;
