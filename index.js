@@ -1,3 +1,4 @@
 #!/usr/bin/env node
-const { cli } = require("./cli/index");
-cli();
+const { core } = require("./core");
+
+module.exports.core = core;
