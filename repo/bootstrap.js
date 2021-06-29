@@ -6,10 +6,10 @@ const { warn, progress } = require("../log");
 const { home } = require("../utils/home");
 const fetch = require("node-fetch");
 const decompress = require("decompress");
-const { which } = require("../utils/which");
+const which = require("which");
 
 const checkGit = (config) => {
-  const hasGit = which("git");
+  const hasGit = which.sync("git", { nothrow: true });
   if (!hasGit) {
     warn({ text: "Git not found, install git to speed things up.", config });
     return false;
