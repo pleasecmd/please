@@ -10,7 +10,7 @@ const postprocess = (args) => {
   processed.silentRun = processed.silent || args["silent-run"];
   processed.silentInstall = processed.silent || args["silent-install"];
   processed.verbose = args.verbose;
-  processed.update = !args["no-update"];
+  if (args["no-update"]) processed.update = false;
   if (processed.silent) processed.log = 0;
   processed.log = args.log;
   processed.command = args.command;
