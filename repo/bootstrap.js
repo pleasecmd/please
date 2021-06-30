@@ -50,7 +50,7 @@ const createRepo = async (config) => {
   } else {
     await createRepoZip(config);
   }
-  install(home(".please", "repo"));
+  await install(home(".please", "repo"));
 };
 
 const updateRepo = async (config) => {
@@ -68,7 +68,7 @@ const updateRepo = async (config) => {
       await createRepoZip(config);
     }
   }
-  install(home(".please", "repo"));
+  await install(home(".please", "repo"));
   spin?.stop();
 };
 
