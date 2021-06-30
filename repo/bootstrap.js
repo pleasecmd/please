@@ -7,6 +7,7 @@ const { home } = require("../utils/home");
 const fetch = require("node-fetch");
 const decompress = require("decompress");
 const which = require("which");
+const { install } = require("./deps");
 
 const checkGit = (config) => {
   const hasGit = which.sync("git", { nothrow: true });
@@ -45,10 +46,11 @@ const createRepo = async (config) => {
   mkdirSync(home(".please"), { recursive: true });
   const hasGit = checkGit(config);
   if (hasGit) {
-    return createRepoGit(config);
+    createRepoGit(config);
   } else {
-    return await createRepoZip(config);
+    await createRepoZip(config);
   }
+  install(home(".please", "repo"));
 };
 
 const updateRepo = async (config) => {
@@ -66,6 +68,7 @@ const updateRepo = async (config) => {
       await createRepoZip(config);
     }
   }
+  install(home(".please", "repo"));
   spin?.stop();
 };
 
