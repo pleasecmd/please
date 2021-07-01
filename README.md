@@ -20,6 +20,10 @@ please [please-args] <command> [command-args]
 echo "Please is amazing" | please lolcat
 ```
 
+## Documentation
+
+Refer to our [wiki](https://github.com/pleasecmd/please/wiki) on GitHub for more information, documentations and details.
+
 ## Notes
 
 Please is a highly experimental tool. It is in alpha stages.
