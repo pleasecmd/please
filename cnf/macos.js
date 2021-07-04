@@ -5,7 +5,7 @@ const installCommandMacOS = (commands, config) => {
   if (!command) {
     return false;
   }
-  const name = command.match(/brew install (.*)/)?.[1];
+  const name = command.match(/brew install ([a-zA-Z0-9._]+)\s*$/)?.[1];
   if (!name) {
     console.log({ name });
     return false;

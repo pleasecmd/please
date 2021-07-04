@@ -27,6 +27,7 @@ const readDefaultConfig = async () => {
     log: 1,
     silentInstall: true,
     update: true,
+    allowUnsafe: false,
   };
 };
 

@@ -1,6 +1,7 @@
 const { managers } = require("../os");
 const { sudo } = require("../utils/sudo");
 const { execSync } = require("child_process");
+const { warn } = require("../log");
 
 const installCommandLinux = (commands, variant, config) => {
   const command = commands[variant] || commands.linux;
@@ -8,7 +9,7 @@ const installCommandLinux = (commands, variant, config) => {
     return false;
   }
   if (variant === "ubuntu") {
-    const name = command.match(/apt-get install (.*)/)?.[1];
+    const name = command.match(/apt-get install ([a-zA-Z0-9._]+)\s*$/)?.[1];
     if (!name) {
       return false;
     }
@@ -17,7 +18,7 @@ const installCommandLinux = (commands, variant, config) => {
     return true;
   }
   if (variant === "debian") {
-    const name = command.match(/apt-get install (.*)/)?.[1];
+    const name = command.match(/apt-get install ([a-zA-Z0-9._]+)\s*$/)?.[1];
     if (!name) {
       return false;
     }
@@ -26,7 +27,7 @@ const installCommandLinux = (commands, variant, config) => {
     return true;
   }
   if (variant === "raspbian") {
-    const name = command.match(/apt-get install (.*)/)?.[1];
+    const name = command.match(/apt-get install ([a-zA-Z0-9._]+)\s*$/)?.[1];
     if (!name) {
       return false;
     }
@@ -35,7 +36,7 @@ const installCommandLinux = (commands, variant, config) => {
     return true;
   }
   if (variant === "arch") {
-    const name = command.match(/pacman -S (.*)/)?.[1];
+    const name = command.match(/pacman -S ([a-zA-Z0-9._]+)\s*$/)?.[1];
     if (!name) {
       return false;
     }
@@ -44,13 +45,18 @@ const installCommandLinux = (commands, variant, config) => {
     return true;
   }
   if (variant === "alpine") {
-    const name = command.match(/apk add (.*)/)?.[1];
+    const name = command.match(/apk add ([a-zA-Z0-9._]+)\s*$/)?.[1];
     if (!name) {
       return false;
     }
     managers.alpine.repo.update([], config);
     managers.alpine.install([name], [], config);
     return true;
+  }
+  if (!config.allowUnsafe) {
+    const text = `Unsafe install command "${command}" is skipped, to allow install re-run the command with --allow-unsafe flag.`;
+    warn({ text, config });
+    return false;
   }
   const stdio = config.log > 2 ? "inherit" : "ignore";
   execSync(sudo(command), { stdio });
