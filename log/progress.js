@@ -1,6 +1,6 @@
 const { info } = require("./info");
 
-const progress = ({ text, config, level = 3 }) =>
-  info({ text, progress: true, config, level });
+const progress = ({ text, config, important = true }) =>
+  info({ text, config, important, progress: true });
 
 module.exports.progress = progress;
