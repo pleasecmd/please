@@ -51,6 +51,14 @@ sudo npm i -g @please.dev/cli
 
 Refer to ["Installing Node.js via package manager"](https://nodejs.org/en/download/package-manager) if you don't have `node` installed.
 
+### Via install.please.dev
+
+If you're on Linux or macOS, you can use the following command to install please:
+
+```bash
+curl https://install.please.dev -s | sh
+```
+
 ### Using releases
 
 Simply download one of the [releases](https://github.com/pleasecmd/please/releases) and copy it to your `$PATH`.
