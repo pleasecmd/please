@@ -27,7 +27,10 @@ const getCommand = async (command, config) => {
     const loaded = await load(command, type, config);
     if (loaded) {
       if (type === "script") {
-        verbose({ text: `Found a JavaScript version of "${command}"`, config });
+        verbose({
+          text: `Found a JavaScript implementation of "${command}"`,
+          config,
+        });
         return await script(command, loaded, config);
       } else if (type === "build") {
         verbose({ text: `Found build instructions for "${command}"`, config });
