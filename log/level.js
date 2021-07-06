@@ -8,7 +8,7 @@
 */
 const getLogLevel = (options) => {
   if (options.verbose) return 4;
-  if (options.silent) return 0;
+  if (options.silent) return 1;
   if ("log" in options) return options.log;
   return 3;
 };
