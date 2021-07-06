@@ -3,7 +3,7 @@ const { info } = require("./info");
 
 const verbose = ({ text, config, progress = false }) =>
   info({
-    text: chalk.grey(text),
+    text: chalk.blue(text),
     progress,
     config,
     important: false,
