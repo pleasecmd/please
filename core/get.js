@@ -1,6 +1,7 @@
 const { load } = require("../repo");
 const { progress, error, info } = require("../log");
 const { installCNF } = require("../cnf");
+const chalk = require("chalk");
 
 const script = async (_, loaded) => loaded.run;
 
@@ -28,28 +29,30 @@ const getCommand = async (command, config) => {
     if (loaded) {
       if (type === "script") {
         info({
-          text: `Found a JavaScript version of "${command}"`,
+          text: chalk.yellow(`Found a JavaScript version of "${command}"`),
           important: false,
           config,
         });
         return await script(command, loaded, config);
       } else if (type === "build") {
         info({
-          text: `Found build instructions for "${command}"`,
+          text: chalk.yellow(`Found build instructions for "${command}"`),
           important: false,
           config,
         });
         return await build(command, loaded, config);
       } else if (type === "install") {
         info({
-          text: `Found install instructions for "${command}"`,
+          text: chalk.yellow(`Found install instructions for "${command}"`),
           important: false,
           config,
         });
         return await install(command, loaded, config);
       } else if (type === "prebuilt") {
         info({
-          text: `Found prebuilt fetch and uncompress instructions for "${command}"`,
+          text: chalk.yellow(
+            `Found prebuilt fetch and uncompress instructions for "${command}"`
+          ),
           important: false,
           config,
         });
@@ -58,14 +61,16 @@ const getCommand = async (command, config) => {
     }
   }
   info({
-    text: `Couldn't find anything on the please repository for "${command}".`,
+    text: chalk.yellow(
+      `Couldn't find anything on the please repository for "${command}".`
+    ),
     important: false,
     config,
   });
   if (config.useCNF) {
     try {
       info({
-        text: `Falling back to CNF for "${command}"`,
+        text: chalk.yellow(`Falling back to CNF for "${command}"`),
         important: false,
         config,
       });
