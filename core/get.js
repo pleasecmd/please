@@ -1,7 +1,6 @@
 const { load } = require("../repo");
-const { progress, error, info } = require("../log");
+const { progress, error, verbose } = require("../log");
 const { installCNF } = require("../cnf");
-const chalk = require("chalk");
 
 const script = async (_, loaded) => loaded.run;
 
@@ -28,52 +27,33 @@ const getCommand = async (command, config) => {
     const loaded = await load(command, type, config);
     if (loaded) {
       if (type === "script") {
-        info({
-          text: chalk.yellow(`Found a JavaScript version of "${command}"`),
-          important: false,
-          config,
-        });
+        verbose({ text: `Found a JavaScript version of "${command}"`, config });
         return await script(command, loaded, config);
       } else if (type === "build") {
-        info({
-          text: chalk.yellow(`Found build instructions for "${command}"`),
-          important: false,
-          config,
-        });
+        verbose({ text: `Found build instructions for "${command}"`, config });
         return await build(command, loaded, config);
       } else if (type === "install") {
-        info({
-          text: chalk.yellow(`Found install instructions for "${command}"`),
-          important: false,
+        verbose({
+          text: `Found install instructions for "${command}"`,
           config,
         });
         return await install(command, loaded, config);
       } else if (type === "prebuilt") {
-        info({
-          text: chalk.yellow(
-            `Found prebuilt fetch and uncompress instructions for "${command}"`
-          ),
-          important: false,
+        verbose({
+          text: `Found prebuilt fetch and uncompress instructions for "${command}"`,
           config,
         });
         return await prebuilt(command, loaded, config);
       }
     }
   }
-  info({
-    text: chalk.yellow(
-      `Couldn't find anything on the please repository for "${command}".`
-    ),
-    important: false,
+  verbose({
+    text: `Couldn't find anything on the please repository for "${command}".`,
     config,
   });
   if (config.useCNF) {
     try {
-      info({
-        text: chalk.yellow(`Falling back to CNF for "${command}"`),
-        important: false,
-        config,
-      });
+      verbose({ text: `Falling back to CNF for "${command}"`, config });
       await installCNF(command, config);
     } catch (err) {
       error({ text: `Couldn't find a way to install "${command}"`, config });
