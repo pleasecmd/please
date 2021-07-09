@@ -2,7 +2,7 @@ const { execSync } = require("child_process");
 const { existsSync, mkdirSync, writeFileSync } = require("fs");
 const { renameSync } = require("fs");
 const { rmSync } = require("fs");
-const { warn, progress } = require("../log");
+const { warn, progress, verbose } = require("../log");
 const { home } = require("../utils/home");
 const fetch = require("node-fetch");
 const decompress = require("decompress");
@@ -22,7 +22,7 @@ const checkGit = (config) => {
 const repoAddr = "https://github.com/pleasecmd/repo";
 
 const createRepoGit = (config) => {
-  const spin = progress({ text: "Cloning please repository", config });
+  const spin = progress({ text: "Cloning the please repository", config });
   execSync(`git clone ${repoAddr}`, {
     cwd: home(".please"),
     stdio: "ignore",
@@ -73,6 +73,7 @@ const updateRepo = async (config) => {
 const checkRepo = async (config) => {
   const exists = existsSync(home(".please", "repo"));
   if (!exists) {
+    verbose({ text: "Please repository not found, bootstrapping" });
     return await createRepo(config);
   }
   if (config.update) {
@@ -80,7 +81,30 @@ const checkRepo = async (config) => {
   }
 };
 
+const fetchNpm = async (config) => {
+  const spin = progress({
+    text: "Fetching NPM",
+    config,
+  });
+  const npmAddr = "https://registry.npmjs.org/npm/-/npm-7.19.1.tgz";
+  const resp = await fetch(npmAddr);
+  const buffer = await resp.buffer();
+  writeFileSync(home(".please", "npm.tgz"), buffer);
+  await decompress(home(".please", "npm.tgz"), home(".please"));
+  renameSync(home(".please", "package"), home(".please", "npm"));
+  spin?.stop();
+};
+
+const checkNpm = async (config) => {
+  const exists = existsSync(home(".please", "npm"));
+  if (!exists) {
+    verbose({ text: "NPM not found, bootstrapping", config });
+    return await fetchNpm(config);
+  }
+};
+
 const bootstrap = async (config) => {
+  await checkNpm(config);
   await checkRepo(config);
 };
 

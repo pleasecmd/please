@@ -1,8 +1,9 @@
 const { fork } = require("child_process");
 const { existsSync } = require("fs");
-const { resolve, join } = require("path");
+const { join } = require("path");
+const { home } = require("../utils/home");
 
-const npm = resolve(require.resolve("npm"), "..", "..", "bin", "npm-cli.js");
+const npm = home(".please", "npm", "bin", "npm-cli.js");
 
 const install = async (dir) => {
   const pkgJson = join(dir, "package.json");
