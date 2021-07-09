@@ -1,6 +1,6 @@
 FROM alpine:3
 
-ADD https://get.please.dev/0.5.4/alpine/x64 /usr/local/bin/please
+ADD https://get.please.dev/0.6.1/alpine/x64 /usr/local/bin/please
 RUN chmod +x /usr/local/bin/please
 
 WORKDIR /app

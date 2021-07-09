@@ -86,6 +86,7 @@ const fetchNpm = async (config) => {
     text: "Fetching NPM",
     config,
   });
+  mkdirSync(home(".please"), { recursive: true });
   const npmAddr = "https://registry.npmjs.org/npm/-/npm-7.19.1.tgz";
   const resp = await fetch(npmAddr);
   const buffer = await resp.buffer();
