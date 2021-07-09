@@ -73,7 +73,7 @@ const updateRepo = async (config) => {
 const checkRepo = async (config) => {
   const exists = existsSync(home(".please", "repo"));
   if (!exists) {
-    verbose({ text: "Please repository not found, bootstrapping" });
+    verbose({ text: "Please repository not found, bootstrapping", config });
     return await createRepo(config);
   }
   if (config.update) {
